@@ -1,0 +1,178 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[a4paper,textwidth=170mm,textheight=245mm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+\usepackage{datetime2}
+\usepackage{parskip}
+\usepackage{amsmath}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+
+\lhead{TANA09 - Datatekniska beräkningar}
+\rhead{\today}
+\setlength{\headheight}{15pt}
+
+\cfoot{\thepage}
+
+\begin{document}
+
+\begin{center}
+	\Huge
+	\textbf{Sammanfattning}
+	\\
+	\large
+	Michael Sörsäter
+\end{center}
+
+\section{Fel}
+Typer av fel:
+\begin{itemize}
+\item{$R_X$ fel i resultatet, som härrör från fel i indata}
+\item{$R_{XF}$ fel i resultatet, som härrör från fel i de använda funktionsvärdena}
+\item{$R_B$ avrundningsfel}
+\item{$R_T$ trunkeringsfel}
+\end{itemize}
+
+Närmevärde till x: $\bar{x}$
+
+Absolut fel: $\Delta x = \bar{x}-x$
+
+Relativt fel: $ \frac{\Delta x}{x}$
+
+\subsection{Metodoberoende feluppskattning}
+\large
+$|x^{*}-\bar{x}| \leq \frac{f(\bar{x})}{f'(\bar{x})} $
+
+\subsection{Feluppskattning för x i Ax = b}
+\large
+$\frac{||\Delta x||_\infty}{||x||_\infty} \leq ||A||_\infty ||A^{-1}||_\infty \frac{||\Delta b||_\infty}{||b||_\infty}$
+
+\normalsize
+
+\section{Interpolation}
+\subsection{Linjär interpolation}
+Beräkna polynomet:
+
+\Large
+$p_n(x) = c_0 + c_1(x-x_1) + c_2 (x-x_1)(x-x_2) + ...$
+
+\normalsize
+Beräkna konstanterna C genom att först sätta in $x_1$ (gör alla delar till 0 förutom $c_0$) och sedan vidare likadant.
+
+Felet är den ``Extra term'' som inte ingår i splinen. $R_T$
+För en linjär interpolation är det termen vid $c_2$
+
+Vid en fullständig feluppskattning ska tre delar tas med.
+Alla delar är såklart absolutbelopp.
+
+\begin{itemize}
+\item{$R_B$ Avrundningsfel.
+Efter beräkningen P(a), har svaret t korrekta decimaler. \\Ger felet: $ R_B = 0.5 * 10^{-t}$}
+\item{$R_T$ Trunkeringsfel.
+(är ofta den dominerande delen)
+Använd termen $c_n$ för att beräkna felet.
+Ex: $ R_T \leq |c_2 (x-x_1)(x-x_2)|$
+}
+\item{$R_{XF}$ Fel i indatan.
+Likadant som för $R_B$ antalet t decimaler som lägst givna i indatan.
+$R_{XF} = 0.5 * 10^{-t}$}
+\end{itemize}
+
+Svaret blir sedan $R_{TOT} = R_B + R_T + R_{XF}$
+
+\subsection{Fel i funktionsvärdet}
+
+\Large
+$A = 0.78 \pm 0.02$
+
+\normalsize
+Vad blir felet i $f(A)$
+
+Använd maximalsfelsuppskattning:
+
+\Large
+$|\Delta f| \leq |\frac{\delta f}{\delta A}| |\Delta A| \approx |\frac{\delta P_n}{\delta A}| |\Delta x| = |c_1||\Delta A|$ 
+
+\normalsize
+Alltså, derivera med avseende på x. Kanske bara fungerar i fallet $P_1$
+
+\section{LU-faktorisering}
+Från matrisen A, beräkna $PA=LU$ där P är en permutationsmatris (ändrar om raderna).
+
+$P_{12} = 
+\begin{pmatrix}
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1
+\end{pmatrix}
+,
+L = 
+\begin{pmatrix}
+1 & 0 & 0 \\
+a & 1 & 0 \\
+b & c & 1
+\end{pmatrix}
+,
+U = 
+\begin{pmatrix}
+a & b & c \\
+0 & d & e \\
+0 & 0 & f
+\end{pmatrix}
+$
+
+Används för att kunna lösa Ax=b.
+
+\Large
+$Ax = b \Leftrightarrow PAx = Pb \Leftrightarrow LUx = Pb$
+
+Sätt $Ux = y$, lös $Ly = Pb$ och sedan $Ux = y$
+
+Använd maximalsfelsuppskattning:
+
+\Large
+$|\Delta f| \leq |\frac{\delta f}{\delta a}| |\Delta a| 
+|\frac{\delta f}{\delta b}| |\Delta b|$ 
+
+\section{Derivering}
+
+\Large
+$f = \frac{u}{v} $
+
+$\frac{d}{dx}\frac{u}{v} = \frac{v\frac{du}{dx}-u\frac{dv}{dx}}{v^2}$
+
+%	\frac{}{}
+\section{Summa - restterm}
+\normalsize
+Summa som är konvergent
+
+\Large
+$$ S = \sum_{n=1}^{\infty} a_n $$
+$$ S_N = \sum_{n=1}^{N} a_n$$
+$$ R_N = S - S_N = \sum_{n=N+1}^{\infty} a_n $$
+
+
+\normalsize
+Hur uppskattas $R_N$ utan att räkna ut den?
+
+\subsection{Alternerande}
+Är serien konvergent och alternerande:
+
+\Large
+$$ |R_N| \leq |a_{N+1}|$$
+
+\subsection{Postiv monotont avtagande}
+$$ R_N = \sum_{N+1}^{\infty} f(n)X \leq \int_{N}^{\infty} f(x) dx $$
+
+\normalsize
+\section{Maclaurin}
+\Large
+$ e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots $
+
+$ sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!} x^{2n+1} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \ldots$
+
+$ cosx) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!} x^{2n} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \ldots$
+
+\end{document}
