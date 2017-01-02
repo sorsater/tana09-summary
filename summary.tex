@@ -129,25 +129,29 @@ Alltså, felet är mindre än nästa term.
 Om funktionen avtar, går mot 0.
 $$ R_N = \sum_{N+1}^{\infty} f(n) \leq \int_{N}^{\infty} f(x) dx $$
 Alltså, integrera funktionen och beräkna integralen.
-Lägg märke till att man beräknar en extra term då man börjar på N istället för N+1.
+Lägg märke till att man beräknar en extra term då man i integralen börjar på N istället för N+1.
+
+\section{Iterationsmetoder}
+\subsection{Newton-Raphsons metod}
+$$ x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}, \: n = 0,1,2,\ldots $$
+
+\subsection{Metodoberoende feluppskattning}
+$$ |x^{*}-\bar{x}| \leq \frac{f(\bar{x})}{f'(\bar{x})} $$
 
 
 \section{Interpolation}
-\subsection{Linjär interpolation}
-\subsection{Metodoberoende feluppskattning}
-$|x^{*}-\bar{x}| \leq \frac{f(\bar{x})}{f'(\bar{x})} $
 
 Beräkna polynomet:
 
-$p_n(x) = c_0 + c_1(x-x_1) + c_2 (x-x_1)(x-x_2) + ...$
+$$ p_n(x) = c_0 + c_1(x-x_1) + c_2 (x-x_1)(x-x_2) + \ldots $$
 
 Beräkna konstanterna C genom att först sätta in $x_1$ (gör alla delar till 0 förutom $c_0$) och sedan vidare likadant.
 
-Felet är den ``Extra term'' som inte ingår i splinen. $R_T$
-För en linjär interpolation är det termen vid $c_2$
+Felet är den ``Extra term'' som inte ingår i interpolationen, $R_T$.
+ För en linjär interpolation är det termen vid $c_2$
 
 Vid en fullständig feluppskattning ska tre delar tas med.
-Alla delar är såklart absolutbelopp.
+Alla delar är absolutbelopp.
 
 \begin{itemize}
 \item{$R_B$ Avrundningsfel.
@@ -162,19 +166,38 @@ Likadant som för $R_B$ antalet t decimaler som lägst givna i indatan.
 $R_{XF} = 0.5 * 10^{-t}$}
 \end{itemize}
 
-Svaret blir sedan $R_{TOT} = R_B + R_T + R_{XF}$
+Svaret blir sedan $R_{TOT} = | R_B | + | R_T | + |R_{XF}| $
+
+\subsection{Spline}
+Låt 
+$$ a = x_1 < x_2 < \ldots < x_n < b $$
+
+\subsection{Lineär spline}
+En funktion s sägs vara en lineär splinefunktion på intervallet [a,b] om:
+\begin{itemize}
+\item{s är kontinuerlig på [a,b]}
+\item{s är en rät linje på varje delintervall $[x_i,x_{i+1}], i = 1,\ldots,n-1 $}
+\end{itemize}
+
+\subsection{Kubisk spline}
+En funktion s sägs vara en kubisk splinefunktion på intervallet [a,b] om:
+\begin{itemize}
+\item{s, s', s'' är kontinuerlig på [a,b]}
+\item{s är ett polynom av grad $\leq 3$ på varje delintervall $[x_i,x_{i+1}], i = 1,\ldots,n-1 $}
+\end{itemize}
+
+Finns två typer av kubiska splines.
+Antingen är derivatan i ändpunkterna 0, rak linje, eller så knyter den ihop med nästa spline.
 
 \subsection{Fel i funktionsvärdet}
 
-$A = 0.78 \pm 0.02$
+$A = \bar{A} \pm \Delta A $
 
 Vad blir felet i $f(A)$
 
 Använd maximalsfelsuppskattning:
 
 $|\Delta f| \leq |\frac{\delta f}{\delta A}| |\Delta A| \approx |\frac{\delta P_n}{\delta A}| |\Delta x| = |c_1||\Delta A|$ 
-
-Alltså, derivera med avseende på x. Kanske bara fungerar i fallet $P_1$
 
 \section{LU-faktorisering}
 Från matrisen A, beräkna $PA=LU$ där P är en permutationsmatris (ändrar om raderna).
