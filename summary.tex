@@ -6,7 +6,16 @@
 \usepackage{parskip}
 \usepackage{amsmath}
 \usepackage{float}
+\usepackage{graphicx}
+\usepackage{wrapfig}
 
+% For the wrapfigure
+\usepackage{caption}
+\usepackage{subcaption}
+
+\graphicspath{{plots/}}
+
+\renewcommand{\figurename}{Figur}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -188,6 +197,20 @@ En funktion s sägs vara en kubisk splinefunktion på intervallet [a,b] om:
 
 Finns två typer av kubiska splines.
 Antingen är derivatan i ändpunkterna 0, rak linje, eller så knyter den ihop med nästa spline.
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{3-2}
+        \caption{Derivatan 0}
+    \end{subfigure}
+    ~ % spacing
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{3-1}
+        \caption{Mjuk övergång till nästa spline}
+    \end{subfigure}
+    \caption{Kubiska Splines}
+\end{figure}
 
 \subsection{Fel i funktionsvärdet}
 
