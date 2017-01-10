@@ -86,9 +86,23 @@ Om $|\Delta a| \leq 0.5*10^{-t}$ sägs $\bar{a}$ ha t korrekta decimaler
   \caption{Fortplantning av fel}
 \end{table}
 
+\newpage
 \subsection{Maximalfelsuppskattning}
+För att uppskatta felet när en dator räknar utförs beräkningsanalys på varje del.
+Följande summa skrivs upp:
 
 $$ | \Delta f| \leq \approx \sum_{k=1}^{n} | \frac{\delta f}{\delta x_k} \Delta x_k| $$
+
+Varje beräkning (+,-,*,/\ldots) ersätts av en bokstav.
+Derivatan beräknas med avseende på sin bokstav:
+
+$|\Delta f| \leq |\frac{\delta f}{\delta a}| |\Delta a|
+|\frac{\delta f}{\delta b}| |\Delta b| \ldots$
+
+För att uppskatta absoluta felet utnyttjas ($\mu =$ maskinkonstant):
+
+$ \frac{\Delta a}{a} \approx \mu \Leftrightarrow \Delta a \approx a\mu$
+
 
 
 \section{Talsystem och flyttalsrepresentation}
@@ -141,14 +155,31 @@ Alltså, integrera funktionen och beräkna integralen.
 Lägg märke till att man beräknar en extra term då man i integralen börjar på N istället för N+1.
 
 \section{Iterationsmetoder}
+\subsection{Konvergerar}
+För att undersöka om en iterationsmetod konvergerar mot en lösning med ett givet startvärde $x_0$ måste den uppfylla två krav:
+\begin{enumerate}
+	\item{Måste kunna skrivas om på originalform}
+	\item{$ |\varphi' (x_0) | < 1 $ för att den ska konvergera}
+\end{enumerate}
+Exempel:
+
+$ f(x) = xe^x-1 = 0 $
+
+$ x_{n+1} = \underbrace{\frac{1 + x_n}{1 + e{x_n}}}_\text{$\varphi(x)$}$
+
+Genom att multiplicera upp nämnaren och flytta runt fås samma orginalfunktion (krav 1). Genom att derivera och sätta in $x_0$ fås ett värde som är $< 1$ (krav 2).
+
 \subsection{Newton-Raphsons metod}
 $$ x_{n+1} = x_n - \frac{f(x_n)}{f'(x_n)}, \: n = 0,1,2,\ldots $$
 
 \subsection{Metodoberoende feluppskattning}
+Används för att uppskatta hur nära x är $x^*$.
+
 $$ |x^{*}-\bar{x}| \leq \frac{f(\bar{x})}{f'(\bar{x})} $$
 
-
-\section{Interpolation}
+\newpage
+\section{Interpolation och splines}
+\subsection{Interpolation}
 
 Beräkna polynomet:
 
@@ -157,7 +188,7 @@ $$ p_n(x) = c_0 + c_1(x-x_1) + c_2 (x-x_1)(x-x_2) + \ldots $$
 Beräkna konstanterna C genom att först sätta in $x_1$ (gör alla delar till 0 förutom $c_0$) och sedan vidare likadant.
 
 Felet är den ``Extra term'' som inte ingår i interpolationen, $R_T$.
- För en linjär interpolation är det termen vid $c_2$
+För en linjär interpolation är det termen vid $c_2$.
 
 Vid en fullständig feluppskattning ska tre delar tas med.
 Alla delar är absolutbelopp.
@@ -177,8 +208,20 @@ $R_{XF} = 0.5 * 10^{-t}$}
 
 Svaret blir sedan $R_{TOT} = | R_B | + | R_T | + |R_{XF}| $
 
+\subsubsection{Fel indata}
+Ibland har även den punkt som uppskattas en felmarginal:
+
+$A = \bar{A} \pm \Delta A $
+
+Vad blir felet i $f(A)$?
+
+Använd maximalsfelsuppskattning.
+
+$|\Delta f| \leq |\frac{\delta f}{\delta A}| |\Delta A| \approx |\frac{\delta P_n}{\delta x}| |\Delta A| \approx \left. \middle/ om\,linjär \middle/ \approx \right. |c_1||\Delta A|$
+
+
 \subsection{Spline}
-Låt 
+Låt
 $$ a = x_1 < x_2 < \ldots < x_n < b $$
 
 \subsection{Lineär spline}
@@ -196,7 +239,8 @@ En funktion s sägs vara en kubisk splinefunktion på intervallet [a,b] om:
 \end{itemize}
 
 Finns två typer av kubiska splines.
-Antingen är derivatan i ändpunkterna 0, rak linje, eller så knyter den ihop med nästa spline.
+Antingen är derivatan i ändpunkterna 0 (rak linje), eller så knyter den ihop med nästa spline.
+För formler om hur man formeln är, se sida 130 i kursboken.
 
 \begin{figure}[H]
     \centering
@@ -212,34 +256,27 @@ Antingen är derivatan i ändpunkterna 0, rak linje, eller så knyter den ihop m
     \caption{Kubiska Splines}
 \end{figure}
 
-\subsection{Fel i funktionsvärdet}
 
-$A = \bar{A} \pm \Delta A $
-
-Vad blir felet i $f(A)$
-
-Använd maximalsfelsuppskattning:
-
-$|\Delta f| \leq |\frac{\delta f}{\delta A}| |\Delta A| \approx |\frac{\delta P_n}{\delta A}| |\Delta x| = |c_1||\Delta A|$ 
-
+\subsection{Extrapolation}
+TODO
 \section{LU-faktorisering}
 Från matrisen A, beräkna $PA=LU$ där P är en permutationsmatris (ändrar om raderna).
 
-$P_{12} = 
+$P_{12} =
 \begin{pmatrix}
 0 & 1 & 0 \\
 1 & 0 & 0 \\
 0 & 0 & 1
 \end{pmatrix}
 ,
-L = 
+L =
 \begin{pmatrix}
 1 & 0 & 0 \\
 a & 1 & 0 \\
 b & c & 1
 \end{pmatrix}
 ,
-U = 
+U =
 \begin{pmatrix}
 a & b & c \\
 0 & d & e \\
@@ -247,37 +284,41 @@ a & b & c \\
 \end{pmatrix}
 $
 
-
-\subsection{Feluppskattning för x i Ax = b}
-$\frac{||\Delta x||_\infty}{||x||_\infty} \leq ||A||_\infty ||A^{-1}||_\infty \frac{||\Delta b||_\infty}{||b||_\infty}$
-
-
 Används för att kunna lösa Ax=b.
 
 $Ax = b \Leftrightarrow PAx = Pb \Leftrightarrow LUx = Pb$
 
 Sätt $Ux = y$, lös $Ly = Pb$ och sedan $Ux = y$
 
-Använd maximalsfelsuppskattning:
+\section{Feluppskattning Ax = b}
+$\frac{||\Delta x||_\infty}{||x||_\infty} \leq ||A||_\infty ||A^{-1}||_\infty \frac{||\Delta b||_\infty}{||b||_\infty}$
 
-$|\Delta f| \leq |\frac{\delta f}{\delta a}| |\Delta a| 
-|\frac{\delta f}{\delta b}| |\Delta b|$ 
+Matrisnormen defineras som:
 
-\section{Derivering}
+$ ||A||_\infty = \underset{1 \leq i \leq n}{\max} ( \sum_{j=1}^n |a_{ij}|)$
 
-$f = \frac{u}{v} $
+Alltså, för varje rad, ta absolutvärdet av varje element och addera dem. Maximala värdet för alla rader är matrisnormen.
 
-$\frac{d}{dx}\frac{u}{v} = \frac{v\frac{du}{dx}-u\frac{dv}{dx}}{v^2}$
+Matrisnormen är ett mått på hur störningar i högerledet (b) förstoras och påverkar x.
 
-\section{Maclaurin}
+\section{Minsta kvadratmetoden}
+Minsta kvadratmetoden används för att hitta en modell för data som inte har exakta lösningar.
+
+För att lösa ekvationen $ Ax = b$ används $A^T$ för att skapa normalekvationen:
+
+$$ A^TAx = A^Tb $$
+
+Det går att visualisera det som att det finns ett plan som spänns upp av kolonnerna i A och en vektor b, som ej ligger i planet. Vi vill då hitta en vektor, x, som placeras ortogonalt mot b (vilket då är närmast). För att ``få ner'' b i planet multipliceras b med matrisen $A^T$ och då även vänsterledet. Detta resulterar i normalekvationen, som alltid har en lösning.
+
+\section{Deriveringsregler}
+$\frac{d}{dx}\frac{u}{v} = \frac{vu'-uv'}{v^2}$
+
+\section{Maclaurinutvecklingar}
 
 $ e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots $
 
 $ sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!} x^{2n+1} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \ldots$
 
-$ cosx) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!} x^{2n} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \ldots$
-
-$|\Delta f| \leq |\frac{\delta f}{\delta A}| |\Delta A| \approx |\frac{\delta P_n}{\delta A}| |\Delta x| = |c_1||\Delta A|$ 
-
+$ cos(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!} x^{2n} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \ldots$
 
 \end{document}
