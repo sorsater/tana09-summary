@@ -91,19 +91,17 @@ Om $|\Delta a| \leq 0.5*10^{-t}$ sägs $\bar{a}$ ha t korrekta decimaler
 För att uppskatta felet när en dator räknar utförs beräkningsanalys på varje del.
 Följande summa skrivs upp:
 
-$$ | \Delta f| \leq \approx \sum_{k=1}^{n} | \frac{\delta f}{\delta x_k} \Delta x_k| $$
+$$ | \Delta f| \leq \approx \sum_{k=1}^{n} | \frac{\delta f}{\delta x_k} | | \Delta x_k| $$
 
 Varje beräkning (+,-,*,/\ldots) ersätts av en bokstav.
 Derivatan beräknas med avseende på sin bokstav:
 
-$|\Delta f| \leq |\frac{\delta f}{\delta a}| |\Delta a|
-|\frac{\delta f}{\delta b}| |\Delta b| \ldots$
+$ |\Delta f| \leq |\frac{\delta f}{\delta a}| |\Delta a| +
+|\frac{\delta f}{\delta b}| |\Delta b| + \ldots $
 
-För att uppskatta absoluta felet utnyttjas ($\mu =$ maskinkonstant):
+För att uppskatta absoluta felet används: ($\mu =$ maskinkonstant)
 
 $ \frac{\Delta a}{a} \approx \mu \Leftrightarrow \Delta a \approx a\mu$
-
-
 
 \section{Talsystem och flyttalsrepresentation}
 Talsystem beskrivs på formen $(\beta, t, L, U)$
@@ -195,7 +193,7 @@ Exempel:
 
 $ f(x) = xe^x-1 = 0 $
 
-$ x_{n+1} = \underbrace{\frac{1 + x_n}{1 + e{x_n}}}_\text{$\varphi(x)$}$
+$ x_{n+1} = \underbrace{\frac{1 + x_n}{1 + e^{x_n}}}_\text{$\varphi(x)$}$
 
 Genom att multiplicera upp nämnaren och flytta runt fås samma orginalfunktion (krav 1). Genom att derivera och sätta in $x_0$ fås ett värde som är $< 1$ (krav 2).
 
@@ -207,7 +205,6 @@ Används för att uppskatta hur nära x är $x^*$.
 
 $$ |x^{*}-\bar{x}| \leq \frac{f(\bar{x})}{f'(\bar{x})} $$
 
-\newpage
 \section{Interpolation och splines}
 \subsection{Interpolation}
 
@@ -225,7 +222,7 @@ Alla delar är absolutbelopp.
 
 \begin{itemize}
 \item{$R_B$ Avrundningsfel.
-Efter beräkningen P(a), har svaret t korrekta decimaler. \\Ger felet: $ R_B = 0.5 * 10^{-t}$}
+Efter beräkningen P(a), har svaret t korrekta decimaler. \\Ger felet: $ R_B = 0.5 \cdot 10^{-t}$}
 \item{$R_T$ Trunkeringsfel.
 (är ofta den dominerande delen)
 Använd termen $c_n$ för att beräkna felet.
@@ -233,7 +230,7 @@ Ex: $ R_T \leq |c_2 (x-x_1)(x-x_2)|$
 }
 \item{$R_{XF}$ Fel i indatan.
 Likadant som för $R_B$ antalet t decimaler som lägst givna i indatan.
-$R_{XF} = 0.5 * 10^{-t}$}
+$R_{XF} = 0.5 \cdot 10^{-t}$}
 \end{itemize}
 
 Svaret blir sedan $R_{TOT} = | R_B | + | R_T | + |R_{XF}| $
@@ -286,7 +283,6 @@ För formler om hur man formeln är, se sida 130 i kursboken.
     \caption{Kubiska Splines}
 \end{figure}
 
-\newpage
 \section{LU-faktorisering}
 Från matrisen A, beräkna $PA=LU$ där P är en permutationsmatris (ändrar om raderna).
 
