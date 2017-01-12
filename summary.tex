@@ -133,6 +133,36 @@ där $x_r$ är det talet som ligger närmast x.
 
 Jämför med formeln i \ref{korrekta}.
 
+\subsection{Roten ur}
+För att beräkna roten ur av ett tal. $ x = \sqrt{a}$ används funktionen $ f(x) = x^2 - a$.
+
+Med Newton-Raphsons fås:
+$ x_{n+1} = \frac{1}{2}(x_n-\frac{a}{x_n})$
+
+I flyttalssystemet skrivs tal som:
+
+$$ x = (1.f)_2 2^e \Rightarrow \sqrt{x} = \sqrt{(1.f)_2} \sqrt{2^e} $$
+
+Resulterar i två fall:
+
+\Large
+$$
+\sqrt{2^e} = \begin{cases}
+               e\, \text{jämn}, 2^{\frac{e}{2}}\\
+               e\, \text{udda}, \sqrt{2}\;2^{\frac{e-1}{2}}
+            \end{cases}
+$$
+
+\large
+Termen $(1.f)_2$ ligger alltid i intervallet $[1,2]$. Då e är udda, multipliceras tvåan in i den roten och uttrycket blir:
+
+$$ \sqrt{x} = \sqrt{(1.f)_2 2}\;2^{\frac{e-1}{2}} $$
+
+Vilket göra att samma term ligger i intervallet $[1,4]$ och det blir då det enda intervallet som måste beräknas.
+
+
+
+
 \section{Summa - restterm}
 Summa som är konvergent
 
@@ -217,7 +247,7 @@ Vad blir felet i $f(A)$?
 
 Använd maximalsfelsuppskattning.
 
-$|\Delta f| \leq |\frac{\delta f}{\delta A}| |\Delta A| \approx |\frac{\delta P_n}{\delta x}| |\Delta A| \approx \left. \middle/ om\,linjär \middle/ \approx \right. |c_1||\Delta A|$
+$|\Delta f| \leq |\frac{\delta f}{\delta A}| |\Delta A| \approx |\frac{\delta P_n}{\delta x}| |\Delta A| \approx \left. \middle/ \text{om linjär} \middle/ \approx \right. |c_1||\Delta A|$
 
 
 \subsection{Spline}
@@ -256,9 +286,7 @@ För formler om hur man formeln är, se sida 130 i kursboken.
     \caption{Kubiska Splines}
 \end{figure}
 
-
-\subsection{Extrapolation}
-TODO
+\newpage
 \section{LU-faktorisering}
 Från matrisen A, beräkna $PA=LU$ där P är en permutationsmatris (ändrar om raderna).
 
@@ -313,12 +341,15 @@ Det går att visualisera det som att det finns ett plan som spänns upp av kolon
 \section{Deriveringsregler}
 $\frac{d}{dx}\frac{u}{v} = \frac{vu'-uv'}{v^2}$
 
-\section{Maclaurinutvecklingar}
+\section{Taylor \& Maclaurin}
 
+\LARGE
 $ e^x = \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots $
 
 $ sin(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n+1)!} x^{2n+1} = x - \frac{x^3}{3!} + \frac{x^5}{5!} - \frac{x^7}{7!} + \ldots$
 
 $ cos(x) = \sum_{n=0}^{\infty} \frac{(-1)^n}{(2n)!} x^{2n} = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} - \frac{x^6}{6!} + \ldots$
+
+$ f(x+h) = \sum_{n=0}^{\infty} \frac{f^n(x)}{n!}h^n = f(x) + f(x)h + \frac{f^{(2)}(x)}{2!}h^3 + \ldots $
 
 \end{document}
